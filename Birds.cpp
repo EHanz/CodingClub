@@ -5,6 +5,8 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
+#include <iterator>
 
 int main ()
 {
@@ -14,11 +16,10 @@ int main ()
     int n = 0;
     int bird_location = 0;
 
-    std :: vector <int> bird_presets;
+    std :: vector <int> bird_presets (n + 2);
 
 
     // Gather user input
-
     // wire length - l
     std :: cin >> wire_length; 
 
@@ -28,30 +29,37 @@ int main ()
     // bird number n
     std :: cin >> n;
 
-    for (int i = 0; i < n; i++)
-    {
-        int temp;
-        std :: cin >> temp;
-        bird_total++;
-        bird_presets.push_back (temp);
-    }
+    bird_presets [0] = 6 - bird_distance;
+
+    std :: copy_n(std :: istream_iterator<int> {std :: cin}, n, bird_presets.begin () + 1);
+
+    std :: sort (bird_presets.begin (), bird_presets.end ());
 
     // i represents index in birds presets
     int i = 0;
 
     // Starting position 6 cm from pole
     bird_location += 6;
-    while (bird_location <= wire_length - 6)
+
+    while (bird_location < wire_length - 6)
     {
         if (bird_location + bird_distance < bird_presets.at (i))
         {
             bird_location += bird_distance;
             bird_total++;
+            std :: cout << "Bird up!" << std :: endl;
         }
         else
         {
             bird_location = bird_presets.at (i) + bird_distance;
             i++;
         }
+
+        if (i == bird_presets.size ())
+        {
+            break;
+        }
     }
+
+    std :: cout << bird_total << std :: endl;
 }
