@@ -14,10 +14,7 @@ int main ()
     int bird_total = 0;
     int bird_distance = 0;
     int n = 0;
-    int bird_location = 0;
-
-    std :: vector <int> bird_presets (n + 2);
-
+    int current_location = 0;
 
     // Gather user input
     // wire length - l
@@ -29,37 +26,40 @@ int main ()
     // bird number n
     std :: cin >> n;
 
-    bird_presets [0] = 6 - bird_distance;
+    std :: vector <int> birds_given (n + 2);
 
-    std :: copy_n(std :: istream_iterator<int> {std :: cin}, n, bird_presets.begin () + 1);
+    birds_given [0] = 6 - bird_distance;
 
-    std :: sort (bird_presets.begin (), bird_presets.end ());
+    std :: copy_n(std :: istream_iterator<int> {std :: cin}, n, birds_given.begin () + 1);
 
-    // i represents index in birds presets
-    int i = 0;
+    std :: sort (birds_given.begin (), birds_given.end ());
 
-    // Starting position 6 cm from pole
-    bird_location += 6;
-
-    while (bird_location < wire_length - 6)
+    if (wire_length <= 12)
     {
-        if (bird_location + bird_distance < bird_presets.at (i))
+        bird_total = 0;
+        std :: cout << bird_total << std :: endl;
+    }
+    else 
+    {
+        if (n == 0)
         {
-            bird_location += bird_distance;
-            bird_total++;
-            std :: cout << "Bird up!" << std :: endl;
+            int distance_temp = wire_length - 12;
+            bird_total += (distance_temp / bird_distance) + 1;
         }
         else
         {
-            bird_location = bird_presets.at (i) + bird_distance;
-            i++;
-        }
+            int left_wire_dist = birds_given[0] - 6;
+            int right_wire_dist = (wire_length - 6) - birds_given[birds_given.size () - 1];
 
-        if (i == bird_presets.size ())
-        {
-            break;
+            bird_total += (left_wire_dist / bird_distance) + (right_wire_dist / bird_distance);
+
+            for (int i = 0; i < n - 1; i++)
+            {
+                int dist_btwn_birds = birds_given[i + 1] - birds_given[i];
+                bird_total += (dist_btwn_birds / bird_distance) - 1;
+            }
         }
+        std :: cout << bird_total << std :: endl;
     }
 
-    std :: cout << bird_total << std :: endl;
 }
