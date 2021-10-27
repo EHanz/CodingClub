@@ -10,34 +10,25 @@
 
 int main ()
 {
-    int wire_length = 0;
-    int bird_total = 0;
-    int bird_distance = 0;
-    int n = 0;
-    int current_location = 0;
+    long wire_length = 0;
+    long bird_total = 0;
+    long bird_distance = 0;
+    long n = 0;
+    long current_location = 0;
 
     // Gather user input
     // wire length - l
-    std :: cin >> wire_length; 
+    std :: cin >> wire_length >> bird_distance >> n;
 
-    // bird distance - d
-    std :: cin >> bird_distance;
+    std :: vector <int> birds_given (n - 2);
 
-    // bird number n
-    std :: cin >> n;
-
-    std :: vector <int> birds_given (n + 2);
-
-    birds_given [0] = 6 - bird_distance;
-
-    std :: copy_n(std :: istream_iterator<int> {std :: cin}, n, birds_given.begin () + 1);
-
+    std :: copy_n(std :: istream_iterator <long> {std :: cin}, n, birds_given.begin () + 1);
     std :: sort (birds_given.begin (), birds_given.end ());
 
     if (wire_length <= 12)
     {
         bird_total = 0;
-        std :: cout << bird_total << std :: endl;
+        std :: cout << bird_total;
     }
     else 
     {
@@ -59,7 +50,7 @@ int main ()
                 bird_total += (dist_btwn_birds / bird_distance) - 1;
             }
         }
-        std :: cout << bird_total << std :: endl;
+        std :: cout << bird_total;
     }
 
 }
