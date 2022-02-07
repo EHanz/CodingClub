@@ -1,0 +1,9 @@
+//Kattis problem for Spiderman's Workout
+#include <iostream>
+#include <vector>
+
+int main ()
+{
+  
+}
+
